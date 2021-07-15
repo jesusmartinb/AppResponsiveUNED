@@ -42,27 +42,26 @@
             </div>
         </div>
         <div class="row confirm no-visible" id="confirmPhoto">
-            <!-- <div class="col-6 mt-2">
+            <div class="col-6 mt-2">
+                <p>Introducir Información</p>
+            </div>
+            <div class="col-6 mt-2 no-visible" id="botonRetry">
                 <button type="button" id="retry" class="confirmar">Reintentar</button>
             </div>
-            <div class="col-6 mt-2">
-                <button type="button" id="confirm" class="confirmar">Introducir Información</button>
-            </div> -->
             <form>
-                <p>Introducir información</p>
                 <div class="col-12 mt-1">
                     <label class="label" for="title">Título</label>
                 </div>
                 <div class="col-12 mt-1">
                     <input class="input" type="text" name="title" id="title"
-                        placeholder="Asignale un título a la imagen">
+                        placeholder="Asignale un título a la imagen" maxlength="100" max="100" required>
                 </div>
                 <div class="col-12 mt-3">
                     <label class="label" for="description">Descripción</label>
                 </div>
                 <div class="col-12 mt-1 mb-3">
                     <input class="input" type="text" name="description" id="description"
-                        placeholder="Describe la imagen" maxlength="250">
+                        placeholder="Describe la imagen" maxlength="250" max="250" required>
                 </div>
                 <div class="col-6 mt-2">
                     <button type="button" id="save" class="confirmar">Guardar</button>

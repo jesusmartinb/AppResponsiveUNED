@@ -96,29 +96,42 @@ let saveImagesToLocalStorage = function () {
 }
 
 
-if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent))) {
-    // we are from not a mobile or tablet
-    mobile = false;
-    const movil = document.getElementById('movil');
 
-    movil.classList.add('no-visible');
+// Put event listeners into place
+window.addEventListener("DOMContentLoaded", function (e) {
+
+    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent))) {
+        // we are from not a mobile or tablet
+        mobile = false;
+        const movil = document.getElementById('movil');
+
+        movil.classList.add('no-visible');
+
+    } else if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+        // we are from a mobile or tablet
+        // console.log('movil');
+        mobile = true;
+
+        const noMovil = document.getElementById('no-movil');
+
+        noMovil.classList.add('no-visible');
+    }
 
     // Initialize carousel
     initializeSlides();
     updateSlides(mobile);
 
-    // Put event listeners into place
-    window.addEventListener("DOMContentLoaded", function (e) {
-        // Grab elements, create settings, etc.
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        var video = document.getElementById('video');
-        var confirmPhoto = document.getElementById('confirmPhoto');
-        var mediaConfig = { video: true };
-        var errBack = function (e) {
-            console.log('An error has occurred!', e)
-        };
+    // Grab elements, create settings, etc.
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var video = document.getElementById('video');
+    var confirmPhoto = document.getElementById('confirmPhoto');
+    var mediaConfig = { video: true };
+    var errBack = function (e) {
+        console.log('An error has occurred!', e)
+    };
 
+    if (mobile === false) {
         // Put video listeners into place
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
@@ -145,134 +158,80 @@ if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Ph
                 video.play();
             }, errBack);
         }
+    }
 
-        // Declare init HTML elements
-        // const camera = document.querySelector('#camera');
-        const photo = document.querySelector('#photo');
-        const open = document.querySelector('#open');
-
-        // Event to active input type file
-        // Trigger photo take
-        open.addEventListener('click', function () {
-            // camera.click();
-
-            context.drawImage(video, 0, 0, 640, 480);
-            canvas.classList.remove('no-visible');
-            canvas.classList.add('canvas');
-            video.classList.add('no-visible');
-
-            // request confirmation to save photo
-            confirmPhoto.classList.remove('no-visible');
-            open.classList.add('no-visible');
-
-            // save canvas image as data url jpeg format quality 0.8
-            var dataURL = canvas.toDataURL('image/jpeg', 0.8);
-
-            // set photo image src to dataURL so it can be saved as an image
-            photo.src = dataURL;
-
-            // document.getElementById('confirmPhoto').addEventListener('click', function () {
-
-            // ask about title and description
-            /* document.getElementById('titleDescrip').classList.remove('no-visible');
-            confirmPhoto.classList.add('no-visible'); */
-
-            document.getElementById('save').addEventListener('click', function (event) {
-                event.preventDefault();
-                let save = {
-                    'item': {
-                        'url': photo.getAttribute('src'),
-                        'title': document.getElementById('title').value,
-                        'description': document.getElementById('description').value
-                    }
-                }
-                images.unshift(save);
-
-                saveImagesToLocalStorage();
-                updateSlides(mobile);
-                location.reload();
-            })
-            // });
-        });
-    }, false);
-
-} else if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-    // we are from a mobile or tablet
-    // console.log('movil');
-    mobile = true;
-
-    const noMovil = document.getElementById('no-movil');
-
-    noMovil.classList.add('no-visible');
-
-    // Initialize carousel
-    initializeSlides();
-    updateSlides(mobile);
-
-    // window.onload = function (e) {
-    window.addEventListener("DOMContentLoaded", function (e) {
-        // Grab elements, create settings, etc.
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        var video = document.getElementById('video');
-        var confirmPhoto = document.getElementById('confirmPhoto');
-        var mediaConfig = { video: true };
-        var errBack = function (e) {
-            console.log('An error has occurred!', e)
-        };
-
-        // Declare init HTML elements
+    // Declare init HTML elements
+    if (mobile) {
         const camera = document.querySelector('#camera');
-        const photo = document.querySelector('#photo');
-        const open = document.querySelector('#open');
+    }
+    const photo = document.querySelector('#photo');
+    const open = document.querySelector('#open');
 
-        /* open.addEventListener('click', function () {
-        }); */
-
-        // Event to active input type file
-        // Trigger photo take
-        open.addEventListener('click', function () {
+    // Event to active input type file
+    // Trigger photo take
+    open.addEventListener('click', function () {
+        if (mobile) {
             camera.click();
+        }
 
-            context.drawImage(video, 0, 0, 640, 480);
-            canvas.classList.remove('no-visible');
-            canvas.classList.add('canvas');
-            video.classList.add('no-visible');
+        context.drawImage(video, 0, 0, 640, 480);
+        canvas.classList.remove('no-visible');
+        canvas.classList.add('canvas');
+        video.classList.add('no-visible');
 
-            // request confirmation to save photo
-            confirmPhoto.classList.remove('no-visible');
-            open.classList.add('no-visible');
-
-            // save canvas image as data url jpeg format quality 0.8
-            var dataURL = canvas.toDataURL('image/jpeg', 0.8);
-
-            // set photo image src to dataURL so it can be saved as an image
-            photo.src = dataURL;
-
-            // document.getElementById('confirmPhoto').addEventListener('click', function () {
-
-            // ask about title and description
-            /* document.getElementById('titleDescrip').classList.remove('no-visible');
-            confirmPhoto.classList.add('no-visible'); */
-
-            document.getElementById('save').addEventListener('click', function (event) {
-                event.preventDefault();
-                let save = {
-                    'item': {
-                        'url': photo.getAttribute('src'),
-                        'title': document.getElementById('title').value,
-                        'description': document.getElementById('description').value
-                    }
-                }
-                images.unshift(save);
-
-                saveImagesToLocalStorage();
-                updateSlides(mobile);
+        // request confirmation to save photo
+        confirmPhoto.classList.remove('no-visible');
+        if (mobile === false) {
+            document.getElementById('botonRetry').classList.remove('no-visible');
+            document.getElementById('retry').addEventListener('click', function () {
                 location.reload();
             })
-            // });
-        });
+        }
+        open.classList.add('no-visible');
 
+        // save canvas image as data url jpeg format quality 0.8
+        var dataURL = canvas.toDataURL('image/jpeg', 0.8);
+
+        // set photo image src to dataURL so it can be saved as an image
+        photo.src = dataURL;
+
+        // document.getElementById('confirmPhoto').addEventListener('click', function () {
+
+        // ask about title and description
+        /* document.getElementById('titleDescrip').classList.remove('no-visible');
+        confirmPhoto.classList.add('no-visible'); */
+
+        document.getElementById('save').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            let title = document.getElementById('title').value;
+            if (title.length === 0) {
+                alert('No has escrito nada en el Título');
+                return;
+            }
+            let description = document.getElementById('description').value;
+            if (description.length === 0) {
+                alert('No has escrito nada en la Descripción');
+                return;
+            }
+
+            let save = {
+                'item': {
+                    'url': photo.getAttribute('src'),
+                    'title': document.getElementById('title').value,
+                    'description': document.getElementById('description').value
+                }
+            }
+            images.unshift(save);
+
+            saveImagesToLocalStorage();
+            updateSlides(mobile);
+            location.reload();
+        })
+        // });
+    });
+
+    if (mobile) {
         try {
             // Event on change content type file
             camera.addEventListener('change', function (e) {
@@ -295,9 +254,5 @@ if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Ph
         } catch (error) {
             alert(error);
         }
-
-
-
-    });
-
-}
+    }
+}, false);

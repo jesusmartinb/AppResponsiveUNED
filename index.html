@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/apple-touch-icon.png">
+    <!-- <script src="/js/movil.js"></script> -->
+    <title>Mi Foto Galería</title>
+</head>
+
+<body>
+    <input type="file" accept="image/*" capture="camera" id="camera" class="inputget">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 bg-dark">
+                <h1 class="text-center text-white p-3">Mi Foto Galería</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 photo-captura" id="movil">
+                <div class="container-photo">
+                    <img id="photo" class="photo">
+                </div>
+            </div>
+            <div class="col-12" id="no-movil">
+                <div class="captura">
+                    <video class="video" id="video" width="640" height="480" autoplay></video>
+                    <canvas class="no-visible" id="canvas" width="640" height="480"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center mt-2">
+                <div class="botonCaptura">
+                    <button type="button" class="snapPhoto my-3" id="open"></button>
+                </div>
+            </div>
+        </div>
+        <div class="row confirm no-visible" id="confirmPhoto">
+            <!-- <div class="col-6 mt-2">
+                <button type="button" id="retry" class="confirmar">Reintentar</button>
+            </div>
+            <div class="col-6 mt-2">
+                <button type="button" id="confirm" class="confirmar">Introducir Información</button>
+            </div> -->
+            <form>
+                <p>Introducir información</p>
+                <div class="col-12 mt-1">
+                    <label class="label" for="title">Título</label>
+                </div>
+                <div class="col-12 mt-1">
+                    <input class="input" type="text" name="title" id="title"
+                        placeholder="Asignale un título a la imagen">
+                </div>
+                <div class="col-12 mt-3">
+                    <label class="label" for="description">Descripción</label>
+                </div>
+                <div class="col-12 mt-1 mb-3">
+                    <input class="input" type="text" name="description" id="description"
+                        placeholder="Describe la imagen" maxlength="250">
+                </div>
+                <div class="col-6 mt-2">
+                    <button type="button" id="save" class="confirmar">Guardar</button>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="row titleDescrip no-visible" id="titleDescrip">
+        </div> -->
+        <div class="row">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div id="slides_container" class="carousel-inner">
+                    <!-- <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col">
+                                <img src="/images/foto_1.jpg" class="d-block w-100 p-1" alt="...">
+                            </div>
+                            <div class="col">
+                                <img src="/images/foto_2.jpg" class="d-block w-100 p-1" alt="...">
+                            </div>
+                            <div class="col">
+                                <img src="/images/foto_3.jpg" class="d-block w-100 p-1" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col">
+                                <img src="/images/foto_1.jpg" class="d-block w-100 p-1" alt="...">
+                            </div>
+                            <div class="col">
+                                <img src="/images/foto_2.jpg" class="d-block w-100 p-1" alt="...">
+                            </div>
+                            <div class="col">
+                                <img src="/images/foto_3.jpg" class="d-block w-100 p-1" alt="...">
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="row menu">
+            <div class="col-6 col-sm-12 text-center mt-3">
+                <div class="boton m-auto">
+                    <a href="index.html" class="active" id="foto">Foto</a>
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 text-center mt-3">
+                <div class="boton">
+                    <a href="images.html" class="" id="images">Imagenes</a>
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 text-center mt-3">
+                <div class="boton">
+                    <a href="efectos.html" class="" id="efectos">Efectos</a>
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 text-center mt-3 mb-3">
+                <div class="boton">
+                    <a href="location.html" class="" id="location">Ubicación</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

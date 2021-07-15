@@ -1,0 +1,30 @@
+{
+  "short_name": "Mi Foto Galería",
+  "name": "Mi Foto Galería",
+  "background_color": "#000000",
+  "theme_color": "#FFFFFF",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/launcher-icon-1x.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "images/launcher-icon-2x.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "images/launcher-icon-4x.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    }
+  ]
+}

@@ -1,10 +1,12 @@
 let images = null;
-var images_default = new Array(
+let images_default = new Array(
     { item: { url: '/images/foto_1.jpg', title: 'Festival de música Rock - The Platers', description: 'Componentes del grupo de música The Platers' } },
     { item: { url: '/images/foto_2.jpg', title: 'Festival de música Rock - The Dream', description: 'Componentes del grupo de música The Dream' } },
     { item: { url: '/images/foto_3.jpg', title: 'Festival de música Rock - Forty-Seven', description: 'Componentes del grupo de música Forty-Seven' } }
 );
 const images_key = 'images_location';
+let index;
+let cycling = true;
 
 let loadImagesFromLocalStorage = function () {
     try {
@@ -19,11 +21,14 @@ let loadImagesFromLocalStorage = function () {
     }
 };
 
+let effect = 'nones';
+
 let mobile;
 let sliderContainer = document.getElementById('slides_container');
-let updateSlides = function (mobile) {
+let sliderContainer2 = document.getElementById('slides_container_2');
+let updateSlides = function (mobile, effect) {
     sliderContainer.innerHTML = "";
-    loadSlides(mobile /*getEffect()*/);
+    loadSlides(mobile, effect);
 }
 
 let initializeSlides = function () {
@@ -39,7 +44,7 @@ let loadSlides = function (mobile, effect = null) {
     try {
         // Create the divs for the photo carousel,
         let item_ = '';
-        if (effect == null && mobile === false) {
+        if (effect === null && mobile === false) {
             for (let i = 0; i < images.length; i++) {
                 if (i === 0) {
                     item_ += '<div ';
@@ -68,7 +73,7 @@ let loadSlides = function (mobile, effect = null) {
                 }
             }
             sliderContainer.innerHTML = item_;
-        } else if (effect == null && mobile === true) {
+        } else if (effect === null && mobile === true) {
             for (let i = 0; i < images.length; i++) {
                 if (i === 0) {
                     item_ += '<div ';
@@ -85,6 +90,34 @@ let loadSlides = function (mobile, effect = null) {
                 item_ += '</div>';
             }
             sliderContainer.innerHTML = item_;
+        } else if (effect === 'nones' || effect === 'img-rounded' || effect === 'img-circle' || effect === 'thumbnail') {
+            for (let i = 0; i < images.length; i++) {
+                item_ += '<div ';
+                if (i === 0) {
+                    item_ += 'class="carousel-item active"';
+                    item_ += ' data-bs-interval="4000"';
+                } else {
+                    item_ += 'class="carousel-item"';
+                    item_ += ' data-bs-interval="4000"';
+                }
+                item_ += '>';
+                item_ += '<img src="' + images[i].item.url + '" alt="" class="' + effect + ' d-block w-100" data-index="' + i + '">';
+                item_ += '<div class="container">';
+                item_ += '<div class="carousel-caption">';
+                item_ += '<h5>' + images[i].item.title + '</h5>';
+                item_ += '<p class="lead">' + images[i].item.description + '</p>';
+                /* item_ += '<div class="center-block"><h3>';
+                item_ += '<a onclick="app.editImage(' + i + ');"><span class="glyphicon glyphicon glyphicon-pencil"></span>&nbsp;';
+                item_ += '<a onclick="app.deleteImage(' + i + ');"><span class="glyphicon glyphicon glyphicon-trash"></span>';
+                item_ += '</div></h3>';
+                item_ += '</div>'; */
+                item_ += '</div>';
+                item_ += '</div>';
+                item_ += '</div>';
+                //alert(item_);
+            }
+
+            sliderContainer2.innerHTML = item_;
         }
     } catch (error) {
         alert(error);
@@ -95,7 +128,70 @@ let saveImagesToLocalStorage = function () {
     localStorage.setItem(images_key, JSON.stringify(images));
 }
 
+let editImage = function (index) {
+    let img = images[index];
+    document.getElementById('edittitle').value = img.item.title;
+    document.getElementById('editdescription').value = img.item.description;
+    document.getElementById('editimage').setAttribute('src', img.item.url);
+    document.getElementById('image_modyfing').setAttribute('value', index);
+}
 
+let modifyImage = function () {
+    try {
+        let it = {
+            'item': {
+                'url': document.getElementById('editimage').getAttribute('src'),
+                'title': document.getElementById('edittitle').value,
+                'description': document.getElementById('editdescription').value
+            }
+        }
+
+        let index = document.getElementById('image_modyfing').getAttribute('value');
+        console.log(index);
+        images[index] = it;
+
+        saveImagesToLocalStorage();
+        console.log(mobile);
+        updateSlides(mobile, 'nones');
+    } catch (error) {
+        alert(error);
+    }
+
+
+}
+
+// stop/start carousel
+let stopStartCarousel = function (cycling, index) {
+    let myCarousel = document.getElementById("carouselExampleCaptions");
+
+    let carousel = bootstrap.Carousel.getInstance(myCarousel);
+    let carouselItems = document.querySelectorAll('.carousel-item');
+
+    if (cycling === true) {
+        carousel.pause();
+        cycling = false;
+        for (let i = 0; i < carouselItems.length; i++) {
+            console.log(index);
+            carouselItems[i].classList.remove('active');
+            if (i == index) {
+                carouselItems[i].classList.add('active');
+                console.log(carouselItems[i]);
+            }
+        }
+    } else {
+        carousel.cycle();
+        cycling = true;
+        for (let i = 0; i < carouselItems.length; i++) {
+            console.log(index);
+            carouselItems[i].classList.remove('active');
+            if (i == index) {
+                carouselItems[i].classList.add('active');
+                console.log(carouselItems[i]);
+            }
+        }
+    }
+
+}
 
 // Put event listeners into place
 window.addEventListener("DOMContentLoaded", function (e) {
@@ -255,4 +351,42 @@ window.addEventListener("DOMContentLoaded", function (e) {
             alert(error);
         }
     }
+
+    // change to container imagenes
+    let imagenes = document.getElementById('images');
+    imagenes.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        document.getElementById('fotografia').classList.add('no-visible');
+        document.getElementById('imagenes').classList.remove('no-visible');
+
+        document.getElementById('foto').classList.remove('activ');
+        imagenes.classList.add('activ');
+
+        // Initialize carousel
+        initializeSlides();
+        updateSlides(mobile, effect);
+
+        document.getElementById('editInformation').addEventListener('click', function () {
+            document.getElementById('edit').classList.remove('no-visible');
+
+            let index = document.querySelector('.active img').getAttribute('data-index');
+            console.log(index);
+            editImage(index);
+            cycling = true;
+            stopStartCarousel(cycling, index);
+
+            document.getElementById('editsave').addEventListener('click', function () {
+                modifyImage();
+                document.getElementById('edit').classList.add('no-visible');
+                cycling = false;
+                stopStartCarousel(cycling, index);
+                //cycling = true;
+
+            });
+
+        });
+
+    })
+
 }, false);

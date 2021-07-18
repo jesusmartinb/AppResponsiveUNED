@@ -30,7 +30,8 @@ body {
     padding: 0 !important;
 }
 
-.captura {
+.captura,
+.iconos {
     max-width: 640px;
     margin: 0 auto;
 }
@@ -69,7 +70,7 @@ a:visited {
 
 a:hover,
 a:active,
-a.active {
+a.activ {
     background-color: white;
     color: black;
 }
@@ -138,4 +139,16 @@ input:valid {
 
 input:focus {
     border: none;
+}
+
+.icono {
+    font-size: 2rem;
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+
+.carousel-caption {
+    bottom: 0.25rem !important;
+    padding-bottom: 0 !important;
 }
